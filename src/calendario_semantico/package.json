@@ -1,0 +1,20 @@
+{
+  "name": "calendario-semantico",
+  "version": "1.0.0",
+  "description": "Motor de busca de datas comemorativas com filtragem semântica e envio por email",
+  "main": "src/calendario_semantico/index.ts",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "nodemailer": "^6.9.0",
+    "@anthropic-ai/sdk": "^0.18.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/nodemailer": "^6.4.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  }
+}
