@@ -1,0 +1,13 @@
+{
+  "provedor": "generico",
+  "baseUrl": "https://PREENCHA_A_URL_DA_SUA_API",
+  "token": "PREENCHA_SEU_TOKEN",
+  "identidade": {
+    "nomeExibicao": "Sua Empresa",
+    "numeroProprio": "55DDDNUMERO"
+  },
+  "seguranca": {
+    "exigirConfirmacaoParaEnviar": true,
+    "limiteEnviosPorHora": 30
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "provedor": "local-gateway",
+  "baseUrl": "http://localhost:2785",
+  "token": "owa_k1_aabad9543d8dc8166b10a433e7f29086a68cd9531af46c2e764f8a7dc8199c33",
+  "sessionId": "af17a2e5-8663-4ce7-97f1-a1028235153a",
+  "identidade": {
+    "nomeExibicao": "Sua Empresa",
+    "numeroProprio": "5521999474917"
+  },
+  "seguranca": {
+    "exigirConfirmacaoParaEnviar": true,
+    "limiteEnviosPorHora": 30
+  }
+}

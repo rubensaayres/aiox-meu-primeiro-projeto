@@ -1,0 +1,19 @@
+name: conteudo-squad
+version: 1.0.0
+description: Squad de criacao de conteudo para redes sociais
+author: Seu Nome
+
+aiox:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - pesquisador.md
+    - redator.md
+    - revisor.md
+    - whatsapp.md
+
+tags:
+  - conteudo
+  - redes-sociais

@@ -1,0 +1,9 @@
+LISTA DE ARQUIVOS GERADOS - PROJETO CALENDARIO SEMANTICO
+Data de Criação: 2026-10-01
+
+- docs/briefs/brainstorm-inicial.md | 2026-10-01
+- docs/prd/calendario-semantico.md | 2026-10-01
+- docs/stories/story-01-integracao-drive.md | 2026-10-01
+- docs/stories/story-02-motor-semantico.md | 2026-10-01
+- docs/stories/story-03-relatorio-email.md | 2026-10-01
+- LISTA_DE_ARQUIVOS.txt | 2026-10-01
