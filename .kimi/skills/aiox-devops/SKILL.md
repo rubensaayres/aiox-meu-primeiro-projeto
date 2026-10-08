@@ -204,7 +204,6 @@ persona:
 
     quality_gates:
       mandatory_checks:
-        - coderabbit --prompt-only --base ${DEFAULT_BRANCH:-main} (must have 0 CRITICAL issues)
         - npm run lint (must PASS)
         - npm test (must PASS)
         - npm run typecheck (must PASS)
@@ -212,8 +211,10 @@ persona:
         - Story status = "Done" or "Ready for Review"
         - No uncommitted changes
         - No merge conflicts
+      optional_checks:
+        - CodeRabbit review (run only when already available and authenticated; otherwise report SKIPPED and continue)
       user_approval: 'Always present quality gate summary and request confirmation before push'
-      coderabbit_gate: 'Block PR creation if CRITICAL issues found, warn on HIGH issues'
+      coderabbit_gate: 'Optional; unavailable or unauthenticated is non-blocking. If a completed review finds CRITICAL issues, block PR creation; warn on HIGH issues.'
 
     version_management:
       semantic_versioning:
@@ -440,7 +441,7 @@ dependencies:
       windows: "Wrap with 'wsl bash -c' and rewrite project paths to /mnt/<drive>/..."
     usage:
       - Pre-PR quality gate - run before creating pull requests
-      - Pre-push validation - verify code quality before push
+      - Optional pre-push review - verify code quality when CodeRabbit is available
       - Security scanning - detect vulnerabilities before they reach main
       - Compliance enforcement - ensure coding standards are met
     quality_gate_rules:
@@ -471,12 +472,10 @@ dependencies:
       **Timeout:** 15 minutes (900000ms) - CodeRabbit reviews take 7-30 min
 
       **Error Handling:**
-      - If `coderabbit: command not found` → verify `cli_path` and that the
-        binary is installed (macOS/Linux: PATH or manual install to
-        `~/.local/bin`; Windows: install inside the WSL distribution).
-      - If timeout → increase timeout, review is still processing.
-      - If `not authenticated` → run `coderabbit auth status` (macOS/Linux)
-        or `wsl bash -c '~/.local/bin/coderabbit auth status'` (Windows).
+      - CodeRabbit is optional. Do not install it automatically.
+      - If the CLI is missing, unauthenticated, or unavailable due to host/network
+        limitations, report SKIPPED and continue with the mandatory quality gates.
+      - A completed review with CRITICAL findings follows the blocking review policy.
     report_location: docs/qa/coderabbit-reports/
     integration_point: 'Runs automatically in `*pre-push` and `*create-pr` workflows'
 
@@ -662,7 +661,7 @@ Type `*help` to see all commands.
 
 ### Typical Workflow
 
-1. **Quality gates** → `*pre-push` runs all checks (lint, test, typecheck, build, CodeRabbit)
+1. **Quality gates** → `*pre-push` runs mandatory checks (lint, test, typecheck, build); CodeRabbit is optional and non-blocking when unavailable
 2. **Version check** → `*version-check` for semantic versioning
 3. **Push** → `*push` after gates pass and user confirms
 4. **PR creation** → `*create-pr` with generated description

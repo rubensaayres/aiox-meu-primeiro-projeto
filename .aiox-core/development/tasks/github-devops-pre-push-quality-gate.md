@@ -110,8 +110,8 @@ constitutional_gate:
         must_pass: true
 
       - name: coderabbit
-        check: No CRITICAL issues
-        must_pass: true
+        check: Run when available; if unavailable, record SKIPPED and continue
+        must_pass: false
 
       - name: story_status
         check: Story status is "Done" or "Ready for Review"
@@ -378,6 +378,8 @@ Remove the reported forbidden paths/content, then run:
 
 ### 9. Run CodeRabbit CLI Review (TR-3.14.12)
 
+CodeRabbit is an optional review aid. Do not install it automatically. If the CLI is missing, unauthenticated, or unavailable because of host/network limitations, report `SKIPPED` and continue. This result must not block a push or other AIOX agent workflows. A completed review that reports CRITICAL findings remains a blocking review result.
+
 ```javascript
 const { execSync } = require('child_process');
 
@@ -439,7 +441,7 @@ function runCodeRabbitReview(projectRoot) {
     if (error.killed && error.signal === 'SIGTERM') {
       console.error('❌ CodeRabbit review timed out after 15 minutes');
       console.error('   Review may still be processing. Check manually.');
-      return { gateImpact: 'FAIL', error: 'Timeout', timeout: true };
+      return { gateImpact: 'SKIPPED', error: 'Timeout', timeout: true };
     }
 
     // Handle authentication errors
@@ -450,7 +452,7 @@ function runCodeRabbitReview(projectRoot) {
           ? '   Run: wsl bash -c "~/.local/bin/coderabbit auth status"'
           : '   Run: ~/.local/bin/coderabbit auth status',
       );
-      return { gateImpact: 'FAIL', error: 'Not authenticated' };
+      return { gateImpact: 'SKIPPED', error: 'Not authenticated' };
     }
 
     // Handle command not found
@@ -462,7 +464,7 @@ function runCodeRabbitReview(projectRoot) {
           ? '   Verify: wsl bash -c "~/.local/bin/coderabbit --version"'
           : '   Verify: ~/.local/bin/coderabbit --version',
       );
-      return { gateImpact: 'FAIL', error: 'Not installed' };
+      return { gateImpact: 'SKIPPED', error: 'Not installed' };
     }
 
     // Generic error with output for debugging
@@ -470,7 +472,7 @@ function runCodeRabbitReview(projectRoot) {
     if (error.stdout) {
       console.log('Output:', error.stdout.toString().substring(0, 500));
     }
-    return { gateImpact: 'CONCERNS', error: error.message };
+    return { gateImpact: 'SKIPPED', error: error.message };
   }
 }
 
@@ -526,6 +528,10 @@ function determineCodeRabbitGate(results) {
 **Usage in pre-push flow:**
 ```javascript
 const coderabbitResult = runCodeRabbitReview(process.cwd());
+
+if (coderabbitResult.gateImpact === 'SKIPPED') {
+  console.log('CodeRabbit review SKIPPED (optional tool unavailable); continuing with mandatory gates.');
+}
 
 if (coderabbitResult.gateImpact === 'FAIL') {
   console.error('\n❌ CodeRabbit quality gate FAILED - cannot push');
@@ -794,6 +800,7 @@ Impact Analysis (Advisory):
   ℹ️  Advisory only — does not affect gate status
 
 Security Scan Results:
+  CodeRabbit review: SKIPPED when unavailable (optional and non-blocking)
   ✓ Dependencies: 0 critical, 0 high, 2 moderate, 5 low
   ✓ Code patterns: No security issues
   ✓ Secrets: No secrets detected

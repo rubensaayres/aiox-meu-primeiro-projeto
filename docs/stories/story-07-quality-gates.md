@@ -14,6 +14,7 @@ Como pessoa desenvolvedora, quero executar lint, typecheck, testes e build no pr
 - [x] `npm test` executa testes reais via runner nativo do Node, incluindo smoke da CLI e interfaces de métricas.
 - [x] `npm run build` conclui a compilação TypeScript e o build Vite.
 - [x] Dependências e lockfile permanecem sincronizados.
+- [x] CodeRabbit documentado como opcional/indisponível; a ausência não bloqueia os quality gates obrigatórios ou agentes AIOX.
 
 ## Validação
 
@@ -24,6 +25,7 @@ Como pessoa desenvolvedora, quero executar lint, typecheck, testes e build no pr
 - `npm run validate:port-denylist` — PASS, 1.100 arquivos verificados.
 - `npm audit --offline=false` — PASS, 0 vulnerabilidades conhecidas.
 - `git diff --check` — PASS.
+- CodeRabbit — SKIPPED por indisponibilidade indicada pelo usuário; nenhuma instalação ou alteração de configuração da ferramenta foi feita.
 
 ## Lista de arquivos
 
@@ -33,6 +35,12 @@ Como pessoa desenvolvedora, quero executar lint, typecheck, testes e build no pr
 - [x] `.eslintrc.cjs`
 - [x] `tests/cli.test.js`
 - [x] `.aiox-core/infrastructure/scripts/validate-port-denylist.js`
+- [x] `.aiox-core/development/tasks/github-devops-pre-push-quality-gate.md`
+- [x] `.aiox-core/development/agents/devops.md`
+- [x] `.codex/agents/devops.md` (projeção sincronizada)
+- [x] `.claude/skills/AIOX/agents/devops/SKILL.md` (projeção sincronizada)
+- [x] `.gemini/rules/AIOX/agents/devops.md` (projeção sincronizada)
+- [x] `.kimi/skills/aiox-devops/SKILL.md` (projeção sincronizada)
 - [x] `postcss.config.js`
 - [x] `src/index.css`
 - [x] `docs/stories/story-07-quality-gates.md`
