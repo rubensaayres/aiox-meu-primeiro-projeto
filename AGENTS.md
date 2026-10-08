@@ -14,52 +14,39 @@ Este arquivo define as instrucoes do projeto para o Codex CLI.
 <!-- AIOX-MANAGED-START: quality -->
 ## Quality Gates
 
-- Rode `npm run lint`
-- Rode `npm run typecheck`
-- Rode `npm test`
-- Atualize checklist e file list da story antes de concluir
+- Siga os quality gates de `.aiox-core/constitution.md`: `npm run lint`, `npm run typecheck`, `npm test` e `npm run build`.
+- O script atual de `npm test` ainda é um placeholder que termina com erro; execute-o e reporte esse resultado até que exista uma suíte configurada.
+- Atualize checklist e file list da story antes de concluir.
 <!-- AIOX-MANAGED-END: quality -->
 
 <!-- AIOX-MANAGED-START: codebase -->
 ## Project Map
 
-- Core framework: `.aiox-core/`
-- CLI entrypoints: `bin/`
-- Shared packages: `packages/`
-- Tests: `tests/`
-- Docs: `docs/`
+- Core framework e agentes canônicos: `.aiox-core/`
+- AIOX CLI: `node .aiox-core/cli/index.js`
+- Aplicação: `src/`
+- Stories e documentação: `docs/`
+- Squads e seus artefatos: `squads/`
+- Skills Codex dos agentes centrais: `.codex/skills/`
 <!-- AIOX-MANAGED-END: codebase -->
 
 <!-- AIOX-MANAGED-START: commands -->
 ## Common Commands
 
-- `npm run sync:ide`
-- `npm run sync:ide:check`
+- `node .aiox-core/cli/index.js --help` (CLI AIOX)
+- `npm run sync:ide:codex` (sincroniza somente `.codex/agents/`)
+- `npm run sync:ide:check:codex` (valida somente a projeção de agentes Codex)
 - `npm run sync:skills:codex`
-- `npm run sync:skills:codex:global` (opcional; neste repo o padrao e local-first)
-- `npm run validate:structure`
+- `npm run validate:codex-skills`
 - `npm run validate:agents`
 <!-- AIOX-MANAGED-END: commands -->
 
 <!-- AIOX-MANAGED-START: shortcuts -->
 ## Agent Shortcuts
 
-Preferencia de ativacao no Codex CLI:
-1. Use `/skills` e selecione `aiox-<agent-id>` vindo de `.codex/skills` (ex.: `aiox-architect`)
-2. Se preferir, use os atalhos abaixo (`@architect`, `/architect`, etc.)
+Ative os agentes pelo skill correspondente `aiox-<agent-id>` em `.codex/skills/` (pelo seletor de skills do Codex, quando disponível) ou peça diretamente pelo papel, como `@dev` ou `@architect`.
 
-Interprete os atalhos abaixo carregando o arquivo correspondente em `.aiox-core/development/agents/` (fallback: `.codex/agents/`), renderize o greeting via `generate-greeting.js` e assuma a persona ate `*exit`:
+As definições em `.aiox-core/development/agents/` são a fonte canônica; `.codex/agents/` é uma projeção auxiliar. Os comandos `*...` são instruções de fluxo para o agente, não comandos de shell. A CLI real pode ser consultada com `node .aiox-core/cli/index.js --help`.
 
-- `@architect`, `/architect`, `/architect.md` -> `.aiox-core/development/agents/architect.md`
-- `@dev`, `/dev`, `/dev.md` -> `.aiox-core/development/agents/dev.md`
-- `@qa`, `/qa`, `/qa.md` -> `.aiox-core/development/agents/qa.md`
-- `@pm`, `/pm`, `/pm.md` -> `.aiox-core/development/agents/pm.md`
-- `@po`, `/po`, `/po.md` -> `.aiox-core/development/agents/po.md`
-- `@sm`, `/sm`, `/sm.md` -> `.aiox-core/development/agents/sm.md`
-- `@analyst`, `/analyst`, `/analyst.md` -> `.aiox-core/development/agents/analyst.md`
-- `@devops`, `/devops`, `/devops.md` -> `.aiox-core/development/agents/devops.md`
-- `@data-engineer`, `/data-engineer`, `/data-engineer.md` -> `.aiox-core/development/agents/data-engineer.md`
-- `@ux-design-expert`, `/ux-design-expert`, `/ux-design-expert.md` -> `.aiox-core/development/agents/ux-design-expert.md`
-- `@squad-creator`, `/squad-creator`, `/squad-creator.md` -> `.aiox-core/development/agents/squad-creator.md`
-- `@aiox-master`, `/aiox-master`, `/aiox-master.md` -> `.aiox-core/development/agents/aiox-master.md`
+As skills de agente orientam a leitura da definição canônica, a saudação via `node .aiox-core/development/scripts/generate-greeting.js <agent-id>` e a permanência no papel até o pedido de saída.
 <!-- AIOX-MANAGED-END: shortcuts -->

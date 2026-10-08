@@ -44,6 +44,14 @@ class SquadDispatcher {
      * Orquestra o fluxo de conteúdo
      */
     static async runContentCycle(topic, targetNumber) {
+        const stopDate = new Date('2026-10-08T16:00:00');
+        const now = new Date();
+
+        if (now > stopDate) {
+            console.log(`🛑 Campaign finished. Current date ${now.toISOString()} is past the deadline ${stopDate.toISOString()}.`);
+            return;
+        }
+
         console.log(`🚀 Starting Content Cycle for: ${topic}`);
 
         // Aqui entrariam as chamadas para a Luna, Leo e Vera
